@@ -6,19 +6,22 @@ public class AccountTest {
 
     public static void main(String[] args) {
         Account account = new Account("0013456100", "Mohammad");
-        account.deposit(250);
+        try {
+            account.deposit(250);
+        } catch (DepositException e) {
+            System.err.println("unable to deposit initial amount: " + e.getMessage());
+            return;
+        }
         Scanner scanner = new Scanner(System.in);
         System.out.println("enter withdraw amount: ");
         while (true) {
-            double amount = scanner.nextDouble();
             try {
+                double amount = scanner.nextDouble();
                 doWithdraw(account, amount);
                 break;
-            } catch (InsufficientBalanceException e) {
-                System.out.println("insufficient balance, please insert amount:");
-            } catch (WithdrawException | NegativeAmountException e) {
+            }  catch (WithdrawException e) {
                 System.err.println("something went wrong: " + e.getMessage());
-                break;
+                System.out.println("try again");
             }
         }
         System.out.println(account.getBalance());
