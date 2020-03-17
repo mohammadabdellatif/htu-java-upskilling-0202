@@ -6,16 +6,13 @@ public class TransferHandler {
             throws TransferException {
         if (amount < 0)
             throw new NegativeAmountException();
-        if (debitAccount.getBalance() < amount)
-            throw new TransferException("insufficient balance in debit account");
-
         try {
             debitAccount.withdraw(amount);
             creditAccount.deposit(amount);
         } catch (WithdrawException e) {
-            throw new TransferException("unable to withdraw");
+            throw new TransferException("unable to withdraw", e);
         } catch (DepositException e) {
-            throw new TransferException("unable to deposit");
+            throw new TransferException("unable to deposit", e);
         }
     }
 }

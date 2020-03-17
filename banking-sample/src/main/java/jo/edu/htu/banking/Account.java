@@ -31,8 +31,9 @@ public class Account {
     public void withdraw(double amount) throws WithdrawException {
         if (amount < 0)
             throw new NegativeAmountException();
-        if (amount >= 100)
+        if (amount >= 100) {
             throw new WithdrawException("withdraw limit exceeded");
+        }
         if (balance < amount) {
             throw new InsufficientBalanceException();
         }
