@@ -1,0 +1,4 @@
+implement a console base application which accepts
+two currency codes and an amount to convert
+
+JOD USD 300
