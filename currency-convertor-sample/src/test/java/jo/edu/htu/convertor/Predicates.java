@@ -2,7 +2,7 @@ package jo.edu.htu.convertor;
 
 public class Predicates {
 
-    public class TruePredicate implements CodePredicate {
+    public static class TruePredicate implements CodePredicate {
 
         public boolean isValid(String code) {
             return true;
