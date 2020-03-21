@@ -2,39 +2,50 @@ package jo.edu.htu.convertor;
 
 import java.util.Scanner;
 
-// base
+// instance field (dependency)
+// I can't create a new instance
+// OOD principles applied:
+// 1- Dependency injection:
+//    a- Encapsulate what varies
+//    b- Favor composition over inheritance
 public class CurrencyConvertorApp {
 
-    // instance field (dependency)
-    // I can't create a new instance
-    // OOD principles applied:
-    // 1- Dependency injection:
-    //    a- Encapsulate what varies
-    //    b- Favor composition over inheritance
+    // dependencies
     private RateSupplier rateSupplier;
+    private CodePredicate codePredicate;
 
-    public CurrencyConvertorApp(RateSupplier rateSupplier) {
+    public CurrencyConvertorApp(RateSupplier rateSupplier, CodePredicate codePredicate) {
         this.rateSupplier = rateSupplier;
+        this.codePredicate = codePredicate;
     }
 
     public void run() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("enter from to amount:");
-        // TODO I want to verify if the code inserted by user is a valid code
-        // I need someone to pass him the code and returns a boolean saying if it is valid or not
-        String codeFrom = scanner.next();
-        String codeTo = scanner.next();
-        double amount = scanner.nextDouble();
-        double rate = getRate(codeFrom, codeTo); // unknown
+        String codeFrom = null;
+        String codeTo = null;
+        double amount = 0;
+        do {
+            codeFrom = scanner.next();
+            codeTo = scanner.next();
+            amount = scanner.nextDouble();
+        } while (!isValidCode(codeFrom, "from") | !isValidCode(codeTo, "to"));
+
+        doConvert(codeFrom, codeTo, amount);
+    }
+
+    private boolean isValidCode(String code, String type) {
+        if (!codePredicate.isValid(code)) {
+            System.out.println("invalid  " + type);
+            return false;
+        }
+        return true;
+    }
+
+    private void doConvert(String codeFrom, String codeTo, double amount) {
+        double rate = rateSupplier.getRate(codeFrom, codeTo);
         double result = amount * rate;
         System.out.println("result is: " + result);
     }
 
-    protected double getRate(String codeFrom, String codeTo) {
-        // I need another component to fetch rate
-        // my responsibility is to convert
-        // responsibility of finding the correct rate is not mine
-        double rate = rateSupplier.getRate(codeFrom, codeFrom);
-        return rate;
-    }
 }
