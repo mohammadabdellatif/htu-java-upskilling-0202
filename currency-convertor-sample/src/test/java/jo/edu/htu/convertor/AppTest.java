@@ -1,5 +1,7 @@
 package jo.edu.htu.convertor;
 
+import java.util.function.Supplier;
+
 public class AppTest {
 
     public static void main(String[] args) {
@@ -16,12 +18,15 @@ public class AppTest {
     }
 
     public void runMe() {
+
         CodePredicate falsePredicate = code -> false;
         CodePredicate truePredicate = (code) -> true;
         RateSupplier rateSupplier = (codeCode, codeTo) -> rateToUse;
 
         //CurrencyConvertorApp app = new CurrencyConvertorApp(rateSupplier, truePredicate);
-        CurrencyConvertorApp app = new CurrencyConvertorApp((f, t) -> rateToUse, c -> true);
+        //CurrencyConvertorApp app = new CurrencyConvertorApp((f, t) -> rateToUse, c -> true);
+        //CurrencyConvertorApp app = new CurrencyConvertorApp((f, t) -> rateToUse, CodePredicate.ALWAYS_TRUE);
+        CurrencyConvertorApp app = new CurrencyConvertorApp((f, t) -> rateToUse, CodePredicate.alwaysTrue());
         app.run();
     }
 
