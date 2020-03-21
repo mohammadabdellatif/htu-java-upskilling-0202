@@ -22,20 +22,20 @@ public class Account {
         return owner;
     }
 
-    public void deposit(double amount) throws DepositException {
+    public void deposit(double amount) throws DepositFailures.DepositException {
         if (amount < 0)
             throw new NegativeAmountException();
         balance += amount;
     }
 
-    public void withdraw(double amount) throws WithdrawException {
+    public void withdraw(double amount) throws WithdrawFailures.WithdrawException {
         if (amount < 0)
             throw new NegativeAmountException();
         if (amount >= 100) {
-            throw new WithdrawException("withdraw limit exceeded");
+            throw new WithdrawFailures.WithdrawException("withdraw limit exceeded");
         }
         if (balance < amount) {
-            throw new InsufficientBalanceException();
+            throw new WithdrawFailures.InsufficientBalanceException();
         }
         balance -= amount;
     }

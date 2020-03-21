@@ -1,5 +1,6 @@
 package jo.edu.htu.convertor;
 
+import java.io.Serializable;
 import java.util.Scanner;
 
 // instance field (dependency)
@@ -22,9 +23,9 @@ public class CurrencyConvertorApp {
     public void run() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("enter from to amount:");
-        String codeFrom = null;
-        String codeTo = null;
-        double amount = 0;
+        String codeFrom;
+        String codeTo;
+        double amount;
         do {
             codeFrom = scanner.next();
             codeTo = scanner.next();

@@ -9,9 +9,9 @@ public class TransferHandler {
         try {
             debitAccount.withdraw(amount);
             creditAccount.deposit(amount);
-        } catch (WithdrawException e) {
+        } catch (WithdrawFailures.WithdrawException e) {
             throw new TransferException("unable to withdraw", e);
-        } catch (DepositException e) {
+        } catch (DepositFailures.DepositException e) {
             throw new TransferException("unable to deposit", e);
         }
     }

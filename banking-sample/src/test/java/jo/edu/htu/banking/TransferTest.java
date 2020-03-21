@@ -9,7 +9,7 @@ public class TransferTest {
         Account credit = new Account("12345", "Sami");
         try {
             debit.deposit(80);
-        } catch (DepositException e) {
+        } catch (DepositFailures.DepositException e) {
             System.out.println("unable to deposit initial amount");
             return;
         }

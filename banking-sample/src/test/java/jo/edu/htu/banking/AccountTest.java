@@ -8,7 +8,7 @@ public class AccountTest {
         Account account = new Account("0013456100", "Mohammad");
         try {
             account.deposit(250);
-        } catch (DepositException e) {
+        } catch (DepositFailures.DepositException e) {
             System.err.println("unable to deposit initial amount: " + e.getMessage());
             return;
         }
@@ -19,7 +19,7 @@ public class AccountTest {
                 double amount = scanner.nextDouble();
                 doWithdraw(account, amount);
                 break;
-            }  catch (WithdrawException e) {
+            }  catch (WithdrawFailures.WithdrawException e) {
                 System.err.println("something went wrong: " + e.getMessage());
                 System.out.println("try again");
             }
@@ -27,7 +27,7 @@ public class AccountTest {
         System.out.println(account.getBalance());
     }
 
-    private static void doWithdraw(Account account, double amount) throws WithdrawException {
+    private static void doWithdraw(Account account, double amount) throws WithdrawFailures.WithdrawException {
         System.out.println("try to withdraw");
         account.withdraw(amount);
         System.out.println("withdraw success");
