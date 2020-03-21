@@ -3,20 +3,25 @@ package jo.edu.htu.convertor;
 public class AppTest {
 
     public static void main(String[] args) {
-        AppTest test = new AppTest(0.9);
+        AppTest test = new AppTest(0.9) {
+
+        };
         test.runMe();
     }
 
-    private double rateToUse;
+    private double rateToUse = 0.9;
 
-    public AppTest(double rateToUse) {
-        this.rateToUse = rateToUse;
+    public AppTest(double rate) {
+        this.rateToUse = rate;
     }
 
     public void runMe() {
-        Predicates.TruePredicate truePredicate = new Predicates.TruePredicate();
-        RateSupplier rateSupplier = new DummySupplier();
-        CurrencyConvertorApp app = new CurrencyConvertorApp(rateSupplier, truePredicate);
+        CodePredicate falsePredicate = code -> false;
+        CodePredicate truePredicate = (code) -> true;
+        RateSupplier rateSupplier = (codeCode, codeTo) -> rateToUse;
+
+        //CurrencyConvertorApp app = new CurrencyConvertorApp(rateSupplier, truePredicate);
+        CurrencyConvertorApp app = new CurrencyConvertorApp((f, t) -> rateToUse, c -> true);
         app.run();
     }
 
