@@ -1,5 +1,7 @@
 package jo.edu.htu.convertor;
 
+import jo.edu.htu.Topics;
+
 import java.io.Serializable;
 import java.util.Scanner;
 
@@ -9,6 +11,11 @@ import java.util.Scanner;
 // 1- Dependency injection:
 //    a- Encapsulate what varies
 //    b- Favor composition over inheritance
+@Topics({
+        "Dependency injection",
+        "Favor composition over inheritance",
+        "Encapsulate what varies"
+})
 public class CurrencyConvertorApp {
 
     // dependencies

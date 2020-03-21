@@ -1,9 +1,15 @@
 package jo.edu.htu.math;
 
+import jo.edu.htu.Topics;
+import jo.edu.htu.Version;
+
 import java.util.Objects;
 
+@Version(major = 1, minor = 2)
+@Topics(value = "Immutable class", version = @Version(major = 1, minor = 0))
 public class Point {
-    public static final Point CENTER = new Point(0,0);
+
+    public static final Point CENTER = new Point(0, 0);
 
     private final int x;
     private final int y;

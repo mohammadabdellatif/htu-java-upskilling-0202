@@ -1,5 +1,6 @@
 package jo.edu.htu.convertor;
 
+import jo.edu.htu.math.Point;
 import jo.edu.htu.math.Shape;
 
 import java.io.Serializable;
@@ -32,6 +33,8 @@ public class ObjectTest {
         AppTest test = new AppTest(40) {
 
         };
+
+        Point p;
     }
 
     public static class Dummy extends Object {
