@@ -15,4 +15,8 @@ public class Box<ITEM> {
     public ITEM item() {
         return item;
     }
+
+    public boolean isEmpty() {
+        return item == null;
+    }
 }
