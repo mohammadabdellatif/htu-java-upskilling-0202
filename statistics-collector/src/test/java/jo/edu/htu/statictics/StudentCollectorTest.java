@@ -60,7 +60,7 @@ public class StudentCollectorTest {
             Integer value = statistic.matchedCases();
             Assertions.assertNotNull(name, "statistic name is null");
             Assertions.assertNotNull(value, "statistic with name " + name + " has null value");
-            asMap.put(name, value);
+            Assertions.assertNull(asMap.put(name, value), "it seems there is duplicate keys in the result: " + name);
         }
 
         Map<String, Integer> expectedCases = new HashMap<>();
