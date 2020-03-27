@@ -5,6 +5,8 @@ public class Matrix {
         for (int row = 0; row < matrix.length; row++) {
             if (matrix[row] == null)
                 throw new IllegalArgumentException("row " + row + " is null");
+            if (matrix[row].length != matrix[0].length)
+                throw new IllegalArgumentException("Inconsistent rows");
         }
     }
 
