@@ -21,6 +21,7 @@
         <module>matrix-utility</module>
         <module>number-to-words</module>
         <module>statistics-collector</module>
+        <module>generics-practice</module>
     </modules>
     <dependencies>
         <dependency>
