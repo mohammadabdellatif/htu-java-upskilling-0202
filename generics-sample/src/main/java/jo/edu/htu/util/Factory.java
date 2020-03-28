@@ -1,5 +1,6 @@
 package jo.edu.htu.util;
 
+@FunctionalInterface
 public interface Factory<ITEM> {
 
     ITEM newItem();
