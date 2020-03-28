@@ -22,6 +22,7 @@
         <module>number-to-words</module>
         <module>statistics-collector</module>
         <module>generics-practice</module>
+        <module>interfaces-practice</module>
     </modules>
     <dependencies>
         <dependency>
