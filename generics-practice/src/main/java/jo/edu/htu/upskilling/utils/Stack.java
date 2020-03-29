@@ -31,7 +31,7 @@ public class Stack<ELEMENT> {
     }
 
     public void push(ELEMENT element) {
-        if (capacity()>=stack.size()){
+        if (capacity()==stack.size()){
             throw new IllegalArgumentException("Stack is full");
         }
         stack.add(element);
