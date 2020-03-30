@@ -15,7 +15,7 @@ public class IntegerOperationsFactory implements OperationsFactory<Integer> {
 
             @Override
             public Integer execute( Object first, Object second ) {
-                return Integer.parseInt(String.valueOf(first))+Integer.parseInt(String.valueOf(second));
+                return (Integer)first+(Integer)second;
             }};
 
         return operation;
@@ -24,18 +24,19 @@ public class IntegerOperationsFactory implements OperationsFactory<Integer> {
 
     @Override
     public Operation<Integer> subtraction() {
-       Operation subtractionOp = (first, second) -> Integer.parseInt(String.valueOf(first))-Integer.parseInt(String.valueOf(second));
+       Operation subtractionOp = (first, second) ->  (Integer )first-(Integer )second;
     return subtractionOp;
     }
     @Override
     public Operation<Integer> multiplication() {
-        Operation multiplicationOp = (first, second) -> Integer.parseInt(String.valueOf(first))*Integer.parseInt(String.valueOf(second));
+        Operation multiplicationOp = (first, second) -> (Integer )first*(Integer )second;
         return multiplicationOp;
     }
 
     @Override
     public Operation<Integer> division() {
-        Operation divisionOp = (first, second) -> Integer.parseInt(String.valueOf(first))/Integer.parseInt(String.valueOf(second));
+
+        Operation divisionOp = (first, second) ->  (Integer )first/(Integer )second;
         return divisionOp;
-    }
-}
+
+}}
