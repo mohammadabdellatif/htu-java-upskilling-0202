@@ -1,23 +1,62 @@
+
 package jo.edu.htu.upskilling.utils;
 
 public class Stack<ELEMENT> {
+    private int size = 0;
 
-    public Stack(int capacity) {
+    private int capacity;
+    private Object stackarray[];
+
+    public Stack( int capacity ) {
+        if (capacity < 0) {
+            throw new IllegalArgumentException("negative size");
+
+        }
+        this.capacity = capacity;
+
+        stackarray =  (new Object[capacity]);
     }
 
     public int capacity() {
-        return -1;
+        return capacity;
     }
 
     public int count() {
-        return -1;
+        return size;
+    }
+
+    public void push( ELEMENT e ) {
+        if (size == stackarray.length) {
+            throw new IllegalStateException("stack is full");
+
+        }
+        stackarray[size++] = e;
     }
 
     public ELEMENT pop() {
-        return null;
+        if (size==0)
+            throw new IllegalStateException("stack is empty");
+
+        ELEMENT e = (ELEMENT) stackarray[--size];
+        stackarray[size] = null;
+        return e;
     }
 
-    public void push(ELEMENT element) {
-
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Stack<?> stack = (Stack<?>) o;
+        if (size != stack.size) return false;
+        for (int i = 0; i < size; i++)
+            if (stackarray[i] != stack.stackarray[i]) return false;
+        return true;
     }
-}
+
+    @Override
+    public int hashCode() {
+        return 31 * size + 37;
+    }}
+
+
+
