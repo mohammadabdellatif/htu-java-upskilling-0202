@@ -3,6 +3,7 @@ package jo.edu.htu.upskilling.utils;
 import org.junit.jupiter.api.*;
 
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.Random;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -10,10 +11,10 @@ public class StackTest {
 
     public static final Random RANDOM = new Random();
 
-    @Test
+    @RepeatedTest(4)
     @Order(1)
     public void givenMinusSize_whenConstructingStack_thenFail() {
-        int negativeSize = 1 + RANDOM.nextInt(10) * -1;
+        int negativeSize = (1 + RANDOM.nextInt(10)) * -1;
         IllegalArgumentException thrown = Assertions.assertThrows(IllegalArgumentException.class, () -> new Stack(negativeSize));
         Assertions.assertEquals("negative size", thrown.getMessage());
     }
@@ -87,6 +88,24 @@ public class StackTest {
         stack2.pop();
         Assertions.assertFalse(stack1.equals(stack2), "equals should return false");
         Assertions.assertFalse(stack2.equals(stack1), "equals should return false");
+    }
+
+    @Test
+    public void givenValuesToBePushedInStack_whenPushedToStack_thenIteratorShouldIterateOverElementsInFILO() {
+        Stack<String> stack = new Stack<>(5);
+        stack.push("one");
+        stack.push("two");
+        stack.push("three");
+        stack.push("four");
+
+        Iterator<String> iterator = stack.iterator();
+        Assertions.assertNotNull(iterator, "returned iterator is null");
+        String[] expected = {"four", "three", "two", "one"};
+        int index = 0;
+        for (String value : stack) {
+            Assertions.assertEquals(expected[index++], value, "iterator didn't return the expected value");
+        }
+
     }
 
     private void popElements(Stack<String> stack, String[] toPop) {

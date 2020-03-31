@@ -23,6 +23,7 @@
         <module>statistics-collector</module>
         <module>generics-practice</module>
         <module>interfaces-practice</module>
+        <module>collections-sample</module>
     </modules>
     <dependencies>
         <dependency>
