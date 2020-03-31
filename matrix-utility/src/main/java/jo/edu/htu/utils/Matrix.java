@@ -1,7 +1,6 @@
 package jo.edu.htu.utils;
 
 public class Matrix {
-    int [][] matrix ;
     public Matrix(int[][] matrix) {
         for (int row = 0; row < matrix.length; row++) {
             if (matrix[row] == null)
@@ -9,32 +8,22 @@ public class Matrix {
             if (matrix[row].length != matrix[0].length)
                 throw new IllegalArgumentException("Inconsistent rows");
         }
-        this.matrix=new int[matrix.length][matrix[0].length];
     }
 
     public int rows() {
-        return matrix.length;
+        return -1;
     }
 
     public int cols() {
-        return matrix[0].length;
+        return -1;
     }
 
     public int value(int row, int col) {
-        if (row <0 || col <0)
-            throw new IllegalArgumentException("it must be positive ");
-        if ((row >= matrix.length) || ( col >= matrix[0].length))
-            throw new IllegalArgumentException("cell index not exist: (" + row + ',' + col+')');
-
-        return matrix[row][col];
+        return 0;
     }
 
     public void forEach(ValueConsumer valueConsumer) {
-        for (int row = 0; row < matrix.length; row++) {
-            for (int col = 0; col < matrix[row].length; col++) {
-                valueConsumer.accept(row, col, matrix[row][col]);
-            }
-        }
+
     }
 
     public interface ValueConsumer {
