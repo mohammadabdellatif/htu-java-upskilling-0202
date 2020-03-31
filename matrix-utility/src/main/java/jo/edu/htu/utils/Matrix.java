@@ -9,11 +9,22 @@ public class Matrix {
 
     public Matrix(int[][] matrix) {
         for (int row = 0; row < matrix.length; row++) {
-
             if (matrix[row] == null)
                 throw new IllegalArgumentException("row " + row + " is null");
             if (matrix[row].length != matrix[0].length)
+                if (matrix[row] == null) {
+                    throw new IllegalArgumentException("row" + row + "is null");
+                }
+            if (matrix[row].length != matrix[0].length) {
                 throw new IllegalArgumentException("Inconsistent rows");
+            }
+        }
+        row = matrix.length;
+        col = matrix[0].length;
+        int[][] myInt = new int[row][];
+        for (int i = 0; i < matrix.length; i++) {
+            myInt[i] = matrix[i].clone();
+            this.matrix = myInt;
         }
 
 
@@ -28,18 +39,19 @@ public class Matrix {
     }
 
     public int value(int row, int col) {
-        if (row>matrix.length)
+        if (row > matrix.length)
             throw new IllegalArgumentException("invalid cell index: " + row + "," + col);
-            return matrix[row][col];
+        return matrix[row][col];
     }
-
 
     public void forEach(ValueConsumer valueConsumer) {
-     for (row=0;row<matrix.length;row++)
-     for (int col = 0; col <matrix[row].length ; col++) {
-        valueConsumer.accept(row,col,value(row,col));
+        for (int row = 0; row < matrix.length; row++) {
+            for (int col = 0; col < matrix[row].length; col++) {
+                valueConsumer.accept(row, col, value(row, col));
+            }
+        }
     }
-    }
+
 
     public interface ValueConsumer {
 
