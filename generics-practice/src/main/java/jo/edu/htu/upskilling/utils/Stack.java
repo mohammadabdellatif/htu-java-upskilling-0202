@@ -1,6 +1,8 @@
 package jo.edu.htu.upskilling.utils;
 
-public class Stack<ELEMENT> {
+import java.util.Iterator;
+
+public class Stack<ELEMENT> implements Iterable<ELEMENT>  {
 
     public Stack(int capacity) {
     }
@@ -19,5 +21,10 @@ public class Stack<ELEMENT> {
 
     public void push(ELEMENT element) {
 
+    }
+
+    @Override
+    public Iterator<ELEMENT> iterator() {
+        return null;
     }
 }
