@@ -33,7 +33,7 @@ public class MatrixTest {
                 {10, 6, 7}
         };
         int rowToCorrupt = new Random().nextInt(matrix.length);
-        matrix[rowToCorrupt] = Arrays.copyOf(matrix[rowToCorrupt], rowToCorrupt + 1);
+        matrix[rowToCorrupt] = Arrays.copyOf(matrix[rowToCorrupt], matrix[rowToCorrupt].length + 1);
         IllegalArgumentException thrown = Assertions.assertThrows(IllegalArgumentException.class,
                 () -> new Matrix(matrix), "The constructor should throw IllegalArgumentException");
         Assertions.assertEquals("Inconsistent rows", thrown.getMessage(),
