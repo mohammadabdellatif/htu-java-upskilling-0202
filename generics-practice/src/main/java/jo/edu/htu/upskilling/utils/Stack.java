@@ -1,7 +1,9 @@
 
 package jo.edu.htu.upskilling.utils;
 
-public class Stack<ELEMENT> {
+import java.util.Iterator;
+public class Stack<ELEMENT> implements Iterable<ELEMENT>  {
+
     private int size = 0;
 
     private int capacity;
@@ -13,6 +15,8 @@ public class Stack<ELEMENT> {
 
         }
         this.capacity = capacity;
+
+
 
         stackarray =  (new Object[capacity]);
     }
@@ -43,6 +47,7 @@ public class Stack<ELEMENT> {
     }
 
     @Override
+
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -59,4 +64,9 @@ public class Stack<ELEMENT> {
     }}
 
 
+
+    public Iterator<ELEMENT> iterator() {
+        return null;
+    }
+}
 
