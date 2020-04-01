@@ -64,9 +64,25 @@ public class Stack<ELEMENT> implements Iterable<ELEMENT>  {
     }}
 
 
-
+ @Override
     public Iterator<ELEMENT> iterator() {
-        return null;
+        Iterator<ELEMENT> it = new Iterator<ELEMENT>() {
+            String[] arrayList=new String[capacity];
+
+            private int currentIndex = 0;
+
+            @Override
+            public boolean hasNext() {
+                return currentIndex < capacity && arrayList[currentIndex] != null;
+            }
+
+            @Override
+            public ELEMENT next() {
+                return (ELEMENT) arrayList[currentIndex++];
+            }
+        };
+        return it;
     }
+
 }
 
