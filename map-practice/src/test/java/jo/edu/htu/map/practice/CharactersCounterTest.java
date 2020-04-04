@@ -18,6 +18,7 @@ public class CharactersCounterTest {
         CharactersCounter counter = new CharactersCounter();
         Map<Character, Integer> occurrences = counter.countCharacters(sentence);
 
+        System.out.println(occurrences);
         // then
         Assertions.assertNotNull(occurrences, "should return map");
         Map<Character, Integer> expected = new HashMap<>();
