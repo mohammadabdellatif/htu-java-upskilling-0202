@@ -3,7 +3,6 @@ package jo.edu.htu.upskiling;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.Proxy;
 import java.util.Random;
 
 public class CalculatorTest {
@@ -35,7 +34,9 @@ public class CalculatorTest {
         Assertions.assertEquals(first + second, calculator.sum(first, second), "summation result is incorrect");
         Assertions.assertEquals(first - second, calculator.subtract(first, second), "subtraction result is incorrect");
         Assertions.assertEquals(first * second, calculator.multiply(first, second), "summation result is incorrect");
-        Assertions.assertEquals(first / second, calculator.divide(first, second), "summation result is incorrect");
+        Assertions.assertEquals(first / 30, calculator.divide(first, 30), "summation result is incorrect");
+
+        Assertions.assertThrows(ArithmeticException.class, ()-> calculator.divide(first, 0));
     }
 
     private static boolean isLambda(Class type) {

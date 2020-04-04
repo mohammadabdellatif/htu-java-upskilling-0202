@@ -1,6 +1,9 @@
 package jo.edu.htu.utils;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.Scanner;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class PointsEntryTest {
 
@@ -8,10 +11,21 @@ public class PointsEntryTest {
         Scanner scanner = new Scanner(System.in);
         System.out.println("enter points count: ");
         int count = scanner.nextInt();
-        Set<Point> points = new HashSet<>();
-
-        System.out.println(points.add(null));
-        System.out.println(points.add(null));
+//        Comparator<Point> comparator = (p1, p2) -> -1 * p1.compareTo(p2);
+        Comparator<Point> pointComparator = (p1, p2) -> {
+            if (p1.getX() == p2.getX() && p1.getY() == p2.getY())
+                return 0;
+            if (p1.getX() < p2.getX())
+                return -1;
+            if (p1.getX() > p2.getX())
+                return 1;
+            if (p1.getY() < p2.getY())
+                return -1;
+            return 1;
+        };
+        //Comparator<Point> reverseComparator = (p1, p2) -> -1 * pointComparator.compare(p1,p2);
+        Comparator<Point> reverseComparator = pointComparator.reversed();
+        Set<Point> points = new TreeSet<>(reverseComparator);
 
         for (int current = 0; current < count; current++) {
             int x = scanner.nextInt();
