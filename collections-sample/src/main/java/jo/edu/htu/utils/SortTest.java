@@ -10,16 +10,16 @@ public class SortTest {
         sortArray(values);
         System.out.println(Arrays.toString(values));
 
-        Point[] points = new Point[]{new Point(3, 4), new Point(-1, 4), new Point(-1, -4), new Point(0, 0)};
+        Point[] points = new Point[]{null, new Point(3, 4), new Point(-1, 4), new Point(-1, -4), new Point(0, 0)};
         sortArray(points);
         System.out.println(Arrays.toString(points));
 
-        sortArray(points, (p1, p2) -> -1 * p1.compareTo(p2));
+        sortArray(points, (p1, p2) -> p1 == null ? 1 : -1 * p1.compareTo(p2));
         System.out.println(Arrays.toString(points));
     }
 
     private static <T extends Comparable> void sortArray(T[] values) {
-        sortArray(values, (p1, p2) -> p1.compareTo(p2));
+        sortArray(values, (p1, p2) -> p1 == null ? -1 : p1.compareTo(p2));
 //        sortArray(values, (p1, p2) -> p1.compareTo(p2));
     }
 
@@ -32,7 +32,6 @@ public class SortTest {
             }
         }
     }
-
 
     private static <T> void swapWithNext(T[] values, int i) {
         T v = values[i];
