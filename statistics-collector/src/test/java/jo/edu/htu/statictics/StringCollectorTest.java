@@ -25,7 +25,8 @@ public class StringCollectorTest {
             Integer value = statistic.matchedCases();
             Assertions.assertNotNull(name, "statistic name is null");
             Assertions.assertNotNull(value, "statistic with name " + name + " has null value");
-            Assertions.assertNull(asMap.put(name, value), "it seems there is duplicate keys in the result: " + name);
+            Assertions.assertFalse(asMap.containsKey(name), "it seems there is duplicate keys in the result: " + name);
+            asMap.put(name, value);
         }
 
         Map<String, Integer> expectedCases = new HashMap<>();

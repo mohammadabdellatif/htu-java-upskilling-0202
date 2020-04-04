@@ -24,6 +24,7 @@
         <module>generics-practice</module>
         <module>interfaces-practice</module>
         <module>collections-sample</module>
+        <module>map-practice</module>
     </modules>
     <dependencies>
         <dependency>
