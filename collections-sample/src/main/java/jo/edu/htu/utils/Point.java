@@ -1,9 +1,9 @@
 package jo.edu.htu.utils;
 
-import java.util.Iterator;
 import java.util.Objects;
 
-public class Point {
+public class Point implements Comparable<Point> {
+
     private final int x;
     private final int y;
 
@@ -39,4 +39,19 @@ public class Point {
         return Objects.hash(x, y);
     }
 
+    @Override
+    public int compareTo(Point other) {
+        if(other == null){
+            return 1;
+        }
+        if (x == other.x && y == other.y)
+            return 0;
+        if (x > other.x)
+            return 1;
+        if (x < other.x)
+            return -1;
+        if (y > other.y)
+            return 1;
+        return -1;
+    }
 }
