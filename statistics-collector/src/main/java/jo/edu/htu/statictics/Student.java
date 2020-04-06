@@ -1,5 +1,4 @@
 package jo.edu.htu.statictics;
-
 import java.time.Year;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,8 +15,7 @@ public class Student {
         return new Builder();
     }
 
-    private Student( ){
-
+    private Student(){
 
         Set<String> studentSet=new HashSet<>();
         studentSet.add("u123");
@@ -28,7 +26,6 @@ public class Student {
         for (String set:studentSet) {
             System.out.println(set);
         }
-
 
     }
 
@@ -56,10 +53,10 @@ public class Student {
         return gender;
     }
 
-    public static class Builder {
+    public static class Builder{
 
         public Builder setId(String id) {
-            return this;
+            return this.id=id;
         }
 
         public Builder setName(String name) {
