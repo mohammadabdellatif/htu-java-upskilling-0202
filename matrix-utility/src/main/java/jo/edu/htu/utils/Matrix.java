@@ -1,6 +1,7 @@
 package jo.edu.htu.utils;
 
 public class Matrix {
+
     public Matrix(int[][] matrix) {
         for (int row = 0; row < matrix.length; row++) {
             if (matrix[row] == null)

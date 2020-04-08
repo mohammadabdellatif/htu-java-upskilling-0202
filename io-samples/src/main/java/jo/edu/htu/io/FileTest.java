@@ -11,16 +11,16 @@ public class FileTest {
         // M:\github -> M:\htu\weather-task\..\..\github
         // holder for a path, for a file or a directory that could exists or not
         File workDirectory = new File("M:\\work");
-        File file = new File("M:\\work\\sample.txt");
+        File file = new File("M:/work/sample.txt");
         System.out.println("file exists: " + file.exists());
-        if(!file.exists()) {
+        if (!file.exists()) {
             System.out.println("i will create a new file");
             file.createNewFile();
         }
-        File sub = new File(workDirectory, "dir1\\sub1\\sub2");
+        File sub = new File(workDirectory, "dir1" + File.separatorChar + "sub1/sub2");
 
         System.out.println(sub);
-        if(!sub.exists()) {
+        if (!sub.exists()) {
             System.out.println("create directory");
             sub.mkdirs();
         }

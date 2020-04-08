@@ -6,24 +6,25 @@ import java.nio.file.Paths;
 public class PathsTest {
 
     public static void main(String[] args) {
-        Path path = Paths.get("M:", "work", "dir1");
-        System.out.println(path);
-        System.out.println(path.getFileName());
-        Path root = path.getRoot();
-        System.out.println(root);
-// /home/user
-        System.out.println("===========for each===========");
-        for (Path sec : path) {
-            System.out.println(sec);
-        }
-        System.out.println("===by index===");
-        System.out.println(path.getName(1));
+        Path cwd = Paths.get(".").toAbsolutePath().normalize();
+        System.out.println(cwd);
 
-        Path sampleFile = path.resolve("sample.txt");
-        System.out.println(sampleFile);
+        Path parent = cwd.getParent().getParent();
+        System.out.println(parent);
 
-        Path subpath = path.subpath(1, 2);
-        System.out.println("sub: " + subpath);
-        System.out.println("original: " + path);
+        Path relativize = parent.relativize(cwd);
+        System.out.println(relativize);
+
+        relativize = cwd.relativize(parent);
+        System.out.println(relativize);
+
+        // m:
+        System.out.println(parent.startsWith(cwd));
+        System.out.println(cwd.startsWith(parent));
+
+
+        Path c = Paths.get("C:");
+//        System.out.println(cwd.relativize(c));
+//        System.out.println(c.relativize(cwd));
     }
 }
