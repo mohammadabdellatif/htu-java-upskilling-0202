@@ -2,24 +2,25 @@ package jo.edu.htu.map.practice;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ArgumentsSource;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class CharactersCounterTest {
+public class CharactersCountingStrategyTest {
 
     // accepts a string, returns map containing the characters and the count of its occurrences
-    @Test
-    public void givenAString_whenCountCharacters_thenMapContainsTheExpectedResult() {
+    @ParameterizedTest(name = "[{index}] - testing strategy: {1}")
+    @ArgumentsSource(CountersProvider.class)
+    public void givenAString_whenCountCharacters_thenMapContainsTheExpectedResult(CountingStrategy strategy, String unitName) {
         // given
         String sentence = "Hello, how are you";
 
         // when
-        CharactersCounter counter = new CharactersCounter();
+        CharactersCounter counter = new CharactersCounter(strategy);
         Map<Character, Integer> occurrences = counter.countCharacters(sentence);
 
-        System.out.println(occurrences);
-        // then
         Assertions.assertNotNull(occurrences, "should return map");
         Map<Character, Integer> expected = new HashMap<>();
         expected.put('h', 2);

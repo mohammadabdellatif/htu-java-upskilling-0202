@@ -26,6 +26,7 @@
         <module>collections-sample</module>
         <module>map-practice</module>
         <module>io-samples</module>
+        <module>io-text-files</module>
     </modules>
     <dependencies>
         <dependency>

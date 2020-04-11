@@ -12,12 +12,12 @@ public class WriteTextToFile {
         File asFile = filePath.toFile();
         try {
             // file handle
-            OutputStream os = new FileOutputStream(asFile);
+            OutputStream os = new FileOutputStream(asFile, false);
             try {
                 String name = "<employee>\n\t<first-name>Mohammad</first-name>\n\t<last-name>Abdellatif</last-name>\n</employee>";
                 // UTF-8 encoding
                 System.out.println(name.length());
-                byte[] bytes = name.getBytes();
+                byte[] bytes = name.getBytes("UTF-16");
                 System.out.println(bytes.length);
                 os.write(bytes);
                 os.flush();
