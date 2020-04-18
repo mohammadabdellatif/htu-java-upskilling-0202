@@ -46,8 +46,11 @@ public class DefaultGetRateHandler implements GetRateHandler {
     }
 
     private BigDecimal calculateRateBasedOnUSD(BigDecimal[] rates) {
-        BigDecimal rate = BigDecimal.ONE.divide(rates[0], rates[1].scale(), RoundingMode.CEILING);
-        rate = rate.multiply(rates[1]);
+        BigDecimal fromRate = rates[0];
+        BigDecimal toRate = rates[1];
+        BigDecimal rate = new BigDecimal(1.0 / fromRate.doubleValue());
+        rate.setScale(toRate.scale(), RoundingMode.UP);
+        rate = rate.multiply(toRate);
         return rate;
     }
 
