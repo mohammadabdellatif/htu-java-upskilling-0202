@@ -2,7 +2,7 @@ package jo.edu.htu.jdbc;
 
 import java.sql.*;
 
-public class ConnectSample {
+public class QueryDatabase {
 
     public static void main(String[] args) throws SQLException {
         String url = "jdbc:mysql://localhost:3306/countries?serverTimezone=UTC";
@@ -15,10 +15,16 @@ public class ConnectSample {
             System.out.println(metaData.getDatabaseMinorVersion());
 
             try (Statement statement = connection.createStatement()) {
-                String sql = "insert into countries (ctry_code,ctry_name,ctry_iso_code) " +
-                        "values ('KSA','Kingdom of Saudi Arabia',682)";
-                int updateCount = statement.executeUpdate(sql);// DDL, DML (insert update delete)
-                System.out.println("total affected: " + updateCount);
+                String sql = "select ctry_code code,ctry_name name,ctry_iso_code " +
+                        "from countries where ctry_code = 'JOR'";
+                try (ResultSet resultSet = statement.executeQuery(sql)) {
+                    while (resultSet.next()) {
+                        String code = resultSet.getString(1);// by index (starting from 1)
+                        String name = resultSet.getString("name"); // by alias
+                        int isoCode = resultSet.getInt("ctry_iso_code");// by name
+                        System.out.println(String.join(",", code, name, "" + isoCode));
+                    }
+                }
             }
         }
     }
