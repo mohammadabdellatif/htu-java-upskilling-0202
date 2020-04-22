@@ -11,6 +11,7 @@
         <module>currency-convertor-usecases-impl</module>
         <module>currency-convertor-console-app</module>
         <module>currency-convertor-application</module>
+        <module>currency-convertor-model</module>
     </modules>
     <packaging>pom</packaging>
     <properties>
