@@ -27,6 +27,7 @@
         <module>map-practice</module>
         <module>io-samples</module>
         <module>io-text-files</module>
+        <module>jdbc-samples</module>
     </modules>
     <dependencies>
         <dependency>
