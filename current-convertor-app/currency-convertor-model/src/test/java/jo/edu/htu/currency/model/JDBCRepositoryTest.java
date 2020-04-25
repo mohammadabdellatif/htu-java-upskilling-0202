@@ -1,6 +1,5 @@
 package jo.edu.htu.currency.model;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 public class JDBCRepositoryTest {
@@ -15,19 +14,19 @@ public class JDBCRepositoryTest {
     }
 
     private static void testFind() {
-        JDBCExchangeRateRepository rateRepository = new JDBCExchangeRateRepository();
+        DBExchangeRateRepository rateRepository = new DBExchangeRateRepository();
         ExchangeRateTO exchangeRate = rateRepository.findRateByToCode("JOD");
         System.out.println(exchangeRate);
     }
 
     private static void testInsert(ExchangeRateTO exchangeRateTO) {
-        ExchangeRateRepository repository = new JDBCExchangeRateRepository();
+        ExchangeRateRepository repository = new DBExchangeRateRepository();
         repository.insert(exchangeRateTO);
         System.out.println("done");
     }
 
     private static void testReadAll() {
-        ExchangeRateRepository repository = new JDBCExchangeRateRepository();
+        ExchangeRateRepository repository = new DBExchangeRateRepository();
         List<ExchangeRateTO> exchangeRateTOS = repository.listAllRates();
 
         for (ExchangeRateTO exchangeRateTO : exchangeRateTOS) {

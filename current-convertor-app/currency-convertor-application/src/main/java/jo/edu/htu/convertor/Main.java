@@ -2,7 +2,7 @@ package jo.edu.htu.convertor;
 
 import jo.edu.htu.currency.convertor.ConvertAmountHandler;
 import jo.edu.htu.currency.convertor.DefaultConvertAmountHandler;
-import jo.edu.htu.currency.convertor.DefaultGetRateHandler;
+import jo.edu.htu.currency.convertor.BISGetRateHandler;
 import jo.edu.htu.currency.convertor.GetRateHandler;
 
 import java.io.FileNotFoundException;
@@ -13,7 +13,7 @@ public class Main {
 
     public static void main(String[] args) throws FileNotFoundException {
         Path bisPath = Paths.get(".", "table-i3-e.csv");
-        GetRateHandler rateHandler = new DefaultGetRateHandler(bisPath);
+        GetRateHandler rateHandler = new BISGetRateHandler(bisPath);
         ConvertAmountHandler convertAmountHandler = new DefaultConvertAmountHandler(rateHandler);
         ConsoleApp app = new ConsoleApp(rateHandler, convertAmountHandler);
 

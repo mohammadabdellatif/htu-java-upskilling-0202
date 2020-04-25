@@ -8,14 +8,14 @@ import java.math.RoundingMode;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-public class DefaultGetRateHandler implements GetRateHandler {
+public class BISGetRateHandler implements GetRateHandler {
 
     public static final int CURRENCY_INDEX = 2;
     public static final String CURRENCY_CODE_DELIM = ":";
 
     private Path path;
 
-    public DefaultGetRateHandler(Path path) throws FileNotFoundException {
+    public BISGetRateHandler(Path path) throws FileNotFoundException {
         if (path == null)
             throw new IllegalArgumentException("Null path");
         if (Files.notExists(path)) {

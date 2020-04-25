@@ -6,7 +6,7 @@ import java.nio.file.Paths;
 public class GetRateTest {
 
     public static void main(String[] args) throws FileNotFoundException {
-        GetRateHandler rateHandler = new DefaultGetRateHandler(Paths.get(".", "table-i3-e.csv"));
+        GetRateHandler rateHandler = new BISGetRateHandler(Paths.get(".", "table-i3-e.csv"));
         GetRateResult rate = rateHandler.getRate(new GetRateRequest("EUR", "JOD"));
         System.out.println(rate.getRate());
     }

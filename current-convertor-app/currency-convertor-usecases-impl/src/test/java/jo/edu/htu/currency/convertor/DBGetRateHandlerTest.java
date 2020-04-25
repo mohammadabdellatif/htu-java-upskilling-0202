@@ -3,15 +3,13 @@ package jo.edu.htu.currency.convertor;
 import jo.edu.htu.currency.model.ExchangeRateRepository;
 import jo.edu.htu.currency.model.DBExchangeRateRepository;
 
-import java.nio.file.Paths;
-
-public class ImportRatesTest {
+public class DBGetRateHandlerTest {
 
     public static void main(String[] args) {
         ExchangeRateRepository repository = new DBExchangeRateRepository();
-        ImportRatesHandler importRatesHandler = new BISImportRatesHandler(repository);
+        GetRateHandler getRateHandler = new DBGetRateHandler(repository);
 
-        ImportRequest request = new ImportRequest(Paths.get(".", "table-i3-e.csv"));
-        importRatesHandler.importRates(request);
+        GetRateResult rate = getRateHandler.getRate(new GetRateRequest("JOD", "USD"));
+        System.out.println(rate.getRate());
     }
 }

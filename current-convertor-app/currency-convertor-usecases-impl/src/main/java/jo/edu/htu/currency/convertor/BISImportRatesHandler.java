@@ -10,13 +10,13 @@ import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-public class DefaultImportRatesHandler implements ImportRatesHandler {
+public class BISImportRatesHandler implements ImportRatesHandler {
 
     public static final int CURRENCY_TO_FIELD = 2;
     public static final int CURRENCY_CODE_INDEX = 0;
     private ExchangeRateRepository repository;
 
-    public DefaultImportRatesHandler(ExchangeRateRepository repository) {
+    public BISImportRatesHandler(ExchangeRateRepository repository) {
         this.repository = repository;
     }
 

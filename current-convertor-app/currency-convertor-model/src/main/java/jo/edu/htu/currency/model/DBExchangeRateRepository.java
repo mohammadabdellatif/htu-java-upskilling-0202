@@ -6,7 +6,7 @@ import java.util.List;
 
 // statement -> compiled
 // prepared statement -> pre-compiled
-public class JDBCExchangeRateRepository implements ExchangeRateRepository {
+public class DBExchangeRateRepository implements ExchangeRateRepository {
     private static final String QUERY_ALL_RATES = "select to_code, rate from exchange_rates";
     private static final String INSERT_RATE_SQL = "insert into exchange_rates (to_code, rate) values(?,?)";
     private static final String QUERY_BY_CODE = "select rate from exchange_rates where to_code = ?";
