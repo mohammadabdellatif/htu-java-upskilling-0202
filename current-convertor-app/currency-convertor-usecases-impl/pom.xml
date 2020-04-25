@@ -16,5 +16,11 @@
             <artifactId>currency-convertor-usecases</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>jo.edu.htu.currency.convertor</groupId>
+            <artifactId>currency-convertor-model</artifactId>
+            <version>${project.version}</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 </project>

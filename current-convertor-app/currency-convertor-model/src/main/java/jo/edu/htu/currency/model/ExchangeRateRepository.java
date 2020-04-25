@@ -8,6 +8,8 @@ public interface ExchangeRateRepository {
 
     void insert(ExchangeRateTO exchangeRateTO);
 
+    void update(ExchangeRateTO exchangeRateTO);
+
     ExchangeRateTO findRateByToCode(String code);
 
     List<ExchangeRateTO> listAllRates();

@@ -3,12 +3,14 @@ package jo.edu.htu.currency.model;
 import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
+
 // statement -> compiled
 // prepared statement -> pre-compiled
 public class JDBCExchangeRateRepository implements ExchangeRateRepository {
     private static final String QUERY_ALL_RATES = "select to_code, rate from exchange_rates";
     private static final String INSERT_RATE_SQL = "insert into exchange_rates (to_code, rate) values(?,?)";
     private static final String QUERY_BY_CODE = "select rate from exchange_rates where to_code = ?";
+    private static final String UPDATE_RATE = "update exchange_rates set rate = ? where to_code = ?";
 
     @Override
     public void insert(ExchangeRateTO exchangeRateTO) {
@@ -18,6 +20,22 @@ public class JDBCExchangeRateRepository implements ExchangeRateRepository {
                 statement.setString(1, exchangeRateTO.getToCode());
                 statement.setBigDecimal(2, exchangeRateTO.getRate());
                 statement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+    }
+
+    @Override
+    public void update(ExchangeRateTO exchangeRateTO) {
+        try (Connection connection = getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement(UPDATE_RATE)) {
+                statement.setBigDecimal(1, exchangeRateTO.getRate());
+                statement.setString(2, exchangeRateTO.getToCode());
+                int updated = statement.executeUpdate();
+                if (updated == 0) {
+                    throw new RecordNotFoundException("No rows where updated: " + exchangeRateTO.getToCode());
+                }
             }
         } catch (SQLException e) {
             throw new DaoException(e);

@@ -1,9 +1,20 @@
 package jo.edu.htu.currency.model;
 
-import java.sql.SQLException;
-
 public class DaoException extends RuntimeException {
-    public DaoException(SQLException e) {
+
+    public DaoException() {
+    }
+
+    public DaoException(Exception e) {
         super(e);
     }
+
+    public DaoException(String message) {
+        super(message);
+    }
+
+    public DaoException(String message, Exception cause) {
+        super(message, cause);
+    }
+
 }

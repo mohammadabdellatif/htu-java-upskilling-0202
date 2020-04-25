@@ -10,8 +10,6 @@ import java.nio.file.Path;
 
 public class DefaultGetRateHandler implements GetRateHandler {
 
-    public static final String MONTHLY_FREQUENCY_FLAG = "\"M:Monthly\"";
-    public static final int FREQUENCY_INDEX = 0;
     public static final int CURRENCY_INDEX = 2;
     public static final String CURRENCY_CODE_DELIM = ":";
 
@@ -59,7 +57,7 @@ public class DefaultGetRateHandler implements GetRateHandler {
         String line;
         while ((line = reader.readLine()) != null && !isBothFound(rates)) {
             String[] fields = line.split(",");
-            if (!isMonthlyRecord(fields))
+            if (!BISRecordUtility.isMonthlyRecord(fields))
                 continue;
             processRecord(request, rates, fields);
         }
@@ -80,10 +78,6 @@ public class DefaultGetRateHandler implements GetRateHandler {
         if (recordCurrency.equals(request.getTo())) {
             rates[1] = record.getRate();
         }
-    }
-
-    private boolean isMonthlyRecord(String[] fields) {
-        return fields[FREQUENCY_INDEX].equals(MONTHLY_FREQUENCY_FLAG);
     }
 
     private RateRecord mapFieldsToRecord(String[] fields) {
