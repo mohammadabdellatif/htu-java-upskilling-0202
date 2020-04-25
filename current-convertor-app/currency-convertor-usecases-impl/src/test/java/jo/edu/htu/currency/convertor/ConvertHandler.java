@@ -1,5 +1,6 @@
 package jo.edu.htu.currency.convertor;
 
+import com.mysql.cj.jdbc.MysqlDataSource;
 import jo.edu.htu.currency.model.DBExchangeRateRepository;
 import jo.edu.htu.currency.model.ExchangeRateRepository;
 
@@ -41,7 +42,11 @@ public class ConvertHandler {
     }
 
     private static GetRateHandler getDBRateHandler() {
-        ExchangeRateRepository repository = new DBExchangeRateRepository();
+        MysqlDataSource dataSource = new MysqlDataSource();
+        dataSource.setUser("root");
+        dataSource.setPassword("root");
+        dataSource.setURL("jdbc:mysql://localhost:3306/countries?serverTimezone=UTC");
+        ExchangeRateRepository repository = new DBExchangeRateRepository(dataSource);
         return new DBGetRateHandler(repository);
     }
 }

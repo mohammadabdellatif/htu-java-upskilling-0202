@@ -1,5 +1,6 @@
 package jo.edu.htu.currency.model;
 
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
@@ -12,9 +13,15 @@ public class DBExchangeRateRepository implements ExchangeRateRepository {
     private static final String QUERY_BY_CODE = "select rate from exchange_rates where to_code = ?";
     private static final String UPDATE_RATE = "update exchange_rates set rate = ? where to_code = ?";
 
+    private DataSource dataSource;
+
+    public DBExchangeRateRepository(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
     @Override
     public void insert(ExchangeRateTO exchangeRateTO) {
-        try (Connection connection = getConnection()) {
+        try (Connection connection = dataSource.getConnection()) {
             // parameterized
             try (PreparedStatement statement = connection.prepareStatement(INSERT_RATE_SQL)) {
                 statement.setString(1, exchangeRateTO.getToCode());
@@ -28,7 +35,7 @@ public class DBExchangeRateRepository implements ExchangeRateRepository {
 
     @Override
     public void update(ExchangeRateTO exchangeRateTO) {
-        try (Connection connection = getConnection()) {
+        try (Connection connection = dataSource.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement(UPDATE_RATE)) {
                 statement.setBigDecimal(1, exchangeRateTO.getRate());
                 statement.setString(2, exchangeRateTO.getToCode());
@@ -44,7 +51,7 @@ public class DBExchangeRateRepository implements ExchangeRateRepository {
 
     @Override
     public ExchangeRateTO findRateByToCode(String code) {
-        try (Connection connection = getConnection()) {
+        try (Connection connection = dataSource.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(QUERY_BY_CODE)) {
                 preparedStatement.setString(1, code);
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -64,7 +71,7 @@ public class DBExchangeRateRepository implements ExchangeRateRepository {
 
     @Override
     public List<ExchangeRateTO> listAllRates() {
-        try (Connection connection = getConnection()) {
+        try (Connection connection = dataSource.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement(QUERY_ALL_RATES)) {
                 try (ResultSet resultSet = statement.executeQuery()) {
                     List<ExchangeRateTO> rates = new LinkedList<>();
@@ -82,10 +89,5 @@ public class DBExchangeRateRepository implements ExchangeRateRepository {
         }
     }
 
-    private Connection getConnection() throws SQLException {
-        String url = "jdbc:mysql://localhost:3306/countries?serverTimezone=UTC";
-        String username = "root";
-        String password = "root";
-        return DriverManager.getConnection(url, username, password);
-    }
+
 }
