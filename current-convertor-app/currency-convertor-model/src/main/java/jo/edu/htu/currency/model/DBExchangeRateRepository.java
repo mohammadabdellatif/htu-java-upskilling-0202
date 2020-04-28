@@ -20,6 +20,56 @@ public class DBExchangeRateRepository implements ExchangeRateRepository {
     }
 
     @Override
+    public void insert(Iterable<ExchangeRateTO> rates) {
+//        insertAll(rates);
+        insertUsingBatch(rates);
+    }
+
+    private void insertAll(Iterable<ExchangeRateTO> rates) {
+        try (Connection connection = dataSource.getConnection()) {
+            for (ExchangeRateTO rate : rates) {
+                try (PreparedStatement statement = connection.prepareStatement(INSERT_RATE_SQL)) {
+                    statement.setString(1, rate.getToCode());
+                    statement.setBigDecimal(2, rate.getRate());
+                    statement.executeUpdate();
+                }
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+    }
+
+    private void insertUsingBatch(Iterable<ExchangeRateTO> rates) {
+        try (Connection connection = dataSource.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement(INSERT_RATE_SQL)) {
+                for (ExchangeRateTO rate : rates) {
+                    statement.setString(1, rate.getToCode());
+                    statement.setBigDecimal(2, rate.getRate());
+                    statement.addBatch();// batch the current parameters and prepare for new one
+                }
+                int[] batchResult = statement.executeBatch();
+                System.out.println("number of executed statements: " + batchResult.length);
+//                int batchStatus = batchResult[0];
+//                if(batchStatus >= 0) {
+//                    System.out.println("affected rows: " + batchStatus);
+//                }
+//                if(batchStatus == Statement.SUCCESS_NO_INFO) {
+//                    System.out.println("statement executed successfully, without affecting rows");
+//                }
+//                if(batchStatus == Statement.EXECUTE_FAILED) {
+//                    System.out.println("statement was failed: ");
+//                }
+            }
+        } catch (BatchUpdateException e) {
+            // same as array described above
+            int[] updateCounts = e.getUpdateCounts();
+            throw new DaoException(e);
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+    }
+
+    @Override
     public void insert(ExchangeRateTO exchangeRateTO) {
         try (Connection connection = dataSource.getConnection()) {
             // parameterized

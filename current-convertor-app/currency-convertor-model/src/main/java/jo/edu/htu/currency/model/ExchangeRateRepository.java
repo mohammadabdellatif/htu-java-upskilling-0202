@@ -13,4 +13,6 @@ public interface ExchangeRateRepository {
     ExchangeRateTO findRateByToCode(String code);
 
     List<ExchangeRateTO> listAllRates();
+
+    void insert(Iterable<ExchangeRateTO> rates);
 }
