@@ -28,6 +28,7 @@
         <module>io-samples</module>
         <module>io-text-files</module>
         <module>jdbc-samples</module>
+        <module>sockets-sample</module>
     </modules>
     <dependencies>
         <dependency>
