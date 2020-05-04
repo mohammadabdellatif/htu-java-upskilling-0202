@@ -29,4 +29,29 @@
         <url-pattern>/rates</url-pattern>
         <url-pattern>/exchange_rates</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CurrenciesSelectionServlets</servlet-name>
+        <servlet-class>jo.edu.htu.convertor.web.CurrenciesSelectionServlet</servlet-class>
+        <init-param>
+            <param-name>db_url</param-name>
+            <param-value>jdbc:mysql://localhost:3306/countries?serverTimezone=UTC</param-value>
+        </init-param>
+        <init-param>
+            <param-name>db_user</param-name>
+            <param-value>root</param-value>
+        </init-param>
+        <init-param>
+            <param-name>db_pass</param-name>
+            <param-value>root</param-value>
+        </init-param>
+        <init-param>
+            <param-name>db_driver</param-name>
+            <param-value>com.mysql.cj.jdbc.Driver</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CurrenciesSelectionServlets</servlet-name>
+        <url-pattern>/selectCurrencies</url-pattern>
+    </servlet-mapping>
 </web-app>

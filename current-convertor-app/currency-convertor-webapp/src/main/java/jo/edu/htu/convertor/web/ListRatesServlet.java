@@ -47,7 +47,7 @@ public class ListRatesServlet extends HttpServlet {
 
         // forward the view rendering to another resource
         request.setAttribute("rates", rates.getAllRates());
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/rates.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/views/rates.jsp");
         requestDispatcher.forward(request, response);
 
     }
