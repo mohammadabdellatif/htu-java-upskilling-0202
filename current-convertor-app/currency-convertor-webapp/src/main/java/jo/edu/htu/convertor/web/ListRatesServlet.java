@@ -5,18 +5,16 @@ import jo.edu.htu.currency.model.DBExchangeRateRepository;
 import jo.edu.htu.currency.model.ExchangeRateRepository;
 import org.apache.commons.dbcp2.BasicDataSource;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Map;
 
@@ -42,35 +40,16 @@ public class ListRatesServlet extends HttpServlet {
         }
 
         toCodes.addAll(Arrays.asList(toCodesParams));
-        ListRatesResult rates = ratesHandler.getRates(new ListRatesRequest(fromCode, toCodes));
+        ListRatesRequest listRequest = new ListRatesRequest(fromCode, toCodes);
+        // call the model
+        ListRatesResult rates = ratesHandler.getRates(listRequest);
 
-        Map<String, BigDecimal> allRates = rates.getAllRates();
-        renderView(response, fromCode, allRates);
-    }
 
-    private void renderView(HttpServletResponse response, String fromCode, Map<String, BigDecimal> allRates) throws IOException {
-        response.setContentType("text/html");
-        PrintWriter writer = response.getWriter();
+        // forward the view rendering to another resource
+        request.setAttribute("rates", rates.getAllRates());
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/rates.jsp");
+        requestDispatcher.forward(request, response);
 
-        Date systemDate = new Date();
-        writer.println("<html>");
-        writer.println("<body>");
-        writer.println("The time on server is: " + systemDate);
-        writer.println("<p>The rates from ");
-        writer.println(fromCode);
-        writer.println(":</p>");
-        writer.println("<table class=\"table-bordered\" border=\"1\">");
-        writer.println("<thead><tr><th>Currency</th><th>Rate</th></tr></thead>");
-        writer.println("<tbody>");
-        for (String currency : allRates.keySet()) {
-            writer.println("<tr>");
-            writer.println("<td>" + currency + "</td><td>" + allRates.get(currency) + "</td>");
-            writer.println("</tr>");
-        }
-        writer.println("</tbody>");
-        writer.println("</table>");
-        writer.println("</body>");
-        writer.println("</html>");
     }
 
     private ListRatesHandler prepareListRatesHandler() {
