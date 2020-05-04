@@ -16,6 +16,7 @@ import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Map;
 
@@ -44,14 +45,32 @@ public class ListRatesServlet extends HttpServlet {
         ListRatesResult rates = ratesHandler.getRates(new ListRatesRequest(fromCode, toCodes));
 
         Map<String, BigDecimal> allRates = rates.getAllRates();
-        response.setContentType("text/plain");
+        renderView(response, fromCode, allRates);
+    }
+
+    private void renderView(HttpServletResponse response, String fromCode, Map<String, BigDecimal> allRates) throws IOException {
+        response.setContentType("text/html");
         PrintWriter writer = response.getWriter();
 
-        writer.println("Rates are: ");
+        Date systemDate = new Date();
+        writer.println("<html>");
+        writer.println("<body>");
+        writer.println("The time on server is: " + systemDate);
+        writer.println("<p>The rates from ");
+        writer.println(fromCode);
+        writer.println(":</p>");
+        writer.println("<table class=\"table-bordered\" border=\"1\">");
+        writer.println("<thead><tr><th>Currency</th><th>Rate</th></tr></thead>");
+        writer.println("<tbody>");
         for (String currency : allRates.keySet()) {
-            writer.println(currency + " rate is " + allRates.get(currency));
+            writer.println("<tr>");
+            writer.println("<td>" + currency + "</td><td>" + allRates.get(currency) + "</td>");
+            writer.println("</tr>");
         }
-        writer.flush();
+        writer.println("</tbody>");
+        writer.println("</table>");
+        writer.println("</body>");
+        writer.println("</html>");
     }
 
     private ListRatesHandler prepareListRatesHandler() {
