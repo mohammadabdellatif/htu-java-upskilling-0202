@@ -1,5 +1,7 @@
-package jo.edu.htu.convertor.web;
+package jo.edu.htu.convertor.web.initializers;
 
+import jo.edu.htu.convertor.web.servlets.CurrenciesSelectionServlet;
+import jo.edu.htu.convertor.web.servlets.ListRatesServlet;
 import jo.edu.htu.currency.convertor.*;
 import jo.edu.htu.currency.model.DBExchangeRateRepository;
 import jo.edu.htu.currency.model.ExchangeRateRepository;
@@ -11,6 +13,9 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
 import java.util.Set;
 
+// Java SE (Service Loader) https://docs.oracle.com/javase/7/docs/api/java/util/ServiceLoader.html
+//ServiceLoader<ServiceContainerInitializer> services = ServiceLoader.load(ServiceContainerInitializer.class);
+// Iterator<ServiceContainerInitializer> iterator = services.iterator();
 public class FinanceSystemInitializer implements ServletContainerInitializer {
 
     // prepare application components (aka use-cases)
@@ -46,9 +51,10 @@ public class FinanceSystemInitializer implements ServletContainerInitializer {
 
     private ExchangeRateRepository prepareRepository() {
         BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setUrl("jdbc:mysql://localhost:3306/countries");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/countries?serverTimezone=UTC");
         dataSource.setUsername("root");
         dataSource.setPassword("root");
+        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
         return new DBExchangeRateRepository(dataSource);
     }
 }

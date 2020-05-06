@@ -8,10 +8,14 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import java.io.FileNotFoundException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Iterator;
+import java.util.ServiceLoader;
 
 public class Main {
 
     public static void main(String[] args) throws FileNotFoundException {
+
+
         BasicDataSource dataSource = new BasicDataSource();
         dataSource.setUrl("jdbc:mysql://localhost:3306/countries");
         dataSource.setUsername("root");

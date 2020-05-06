@@ -1,4 +1,4 @@
-package jo.edu.htu.convertor.web;
+package jo.edu.htu.convertor.web.servlets;
 
 import jo.edu.htu.currency.convertor.CurrenciesResult;
 import jo.edu.htu.currency.convertor.ListAvailableCurrenciesHandler;
