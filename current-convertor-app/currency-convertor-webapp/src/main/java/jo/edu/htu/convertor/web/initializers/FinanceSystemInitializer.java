@@ -1,5 +1,6 @@
 package jo.edu.htu.convertor.web.initializers;
 
+import jo.edu.htu.convertor.web.servlets.ConvertAmountServlet;
 import jo.edu.htu.convertor.web.servlets.CurrenciesSelectionServlet;
 import jo.edu.htu.convertor.web.servlets.ListRatesServlet;
 import jo.edu.htu.currency.convertor.*;
@@ -32,9 +33,19 @@ public class FinanceSystemInitializer implements ServletContainerInitializer {
         GetRateHandler getRateHandler = new DBGetRateHandler(repository);
         ListRatesHandler listRatesHandler = new DefaultListRatesHandler(getRateHandler);
         ListAvailableCurrenciesHandler listAvailableCurrenciesHandler = new DefaultListAvailableCurrenciesHandler(repository);
+        ConvertAmountHandler convertAmountHandler = new DefaultConvertAmountHandler(getRateHandler);
 
         registerListRatesServlet(ctx, listRatesHandler);
         registerCurrenciesSelectionServlet(ctx, listAvailableCurrenciesHandler);
+        registerConvertAmountServlet(ctx, listAvailableCurrenciesHandler, convertAmountHandler);
+    }
+
+    private void registerConvertAmountServlet(ServletContext ctx,
+                                              ListAvailableCurrenciesHandler listAvailableCurrenciesHandler,
+                                              ConvertAmountHandler convertAmountHandler) {
+        ConvertAmountServlet convertAmountServlet = new ConvertAmountServlet(listAvailableCurrenciesHandler, convertAmountHandler);
+        ServletRegistration.Dynamic servletRegistration = ctx.addServlet("convertAmountServlet", convertAmountServlet);
+        servletRegistration.addMapping("/convert");
     }
 
     private void registerCurrenciesSelectionServlet(ServletContext ctx, ListAvailableCurrenciesHandler listAvailableCurrenciesHandler) {

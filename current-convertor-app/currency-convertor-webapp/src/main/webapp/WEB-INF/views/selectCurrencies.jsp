@@ -24,8 +24,7 @@ Select currencies to display the exchange rates:
                     <%
                         for (String code : codes) {
                     %>
-                    <option><%= code%>
-                    </option>
+                    <option><%= code%></option>
                     <%
                         }
                     %>
@@ -37,8 +36,7 @@ Select currencies to display the exchange rates:
                     <%
                         for (String code : codes) {
                     %>
-                    <option><%= code%>
-                    </option>
+                    <option><%= code%></option>
                     <%
                         }
                     %>
