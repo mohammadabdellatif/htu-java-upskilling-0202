@@ -50,17 +50,22 @@
         </tr>
     </table>
 </form>
+<% if (request.getAttribute("convertedAmount") != null) {%>
 <table>
     <tr>
-        <td>Converted amount:</td>
-        <td><%= request.getAttribute("convertedAmount") %>
+        <td>From:</td>
+        <td><%=request.getParameter("from")%>
+        </td>
+        <td>To:</td>
+        <td><%=request.getParameter("to")%>
         </td>
     </tr>
     <tr>
-        <td>With rate:</td>
-        <td><%= request.getAttribute("rate") %>
+        <td colspan="4"><%=request.getParameter("amount")%> is <%= request.getAttribute("convertedAmount") %>
+            With rate:<%= request.getAttribute("rate") %>
         </td>
     </tr>
 </table>
+<%}%>
 </body>
 </html>
