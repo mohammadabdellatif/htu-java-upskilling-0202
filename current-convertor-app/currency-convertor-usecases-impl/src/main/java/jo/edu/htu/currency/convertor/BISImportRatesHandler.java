@@ -9,9 +9,6 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 public class BISImportRatesHandler implements ImportRatesHandler {
 
@@ -28,30 +25,27 @@ public class BISImportRatesHandler implements ImportRatesHandler {
         Path filePath = request.getFilePath();
         try (BufferedReader reader = Files.newBufferedReader(filePath)) {
             String line;
-            Set<ExchangeRateTO> rates = new HashSet<>();
             while ((line = reader.readLine()) != null) {
                 String[] fields = line.split(",");
                 if (!BISRecordUtility.isMonthlyRecord(fields))
                     continue;
-                ExchangeRateTO rate = getFieldsAsTO(fields);
-                rates.add(rate);
+                processRecord(fields);
             }
-            repository.insert(rates);
         } catch (IOException e) {
             throw new ImportException(e);
         }
     }
 
-//    private void processRecord(String[] fields) {
-//        ExchangeRateTO rateTO = getFieldsAsTO(fields);
-//        try {
-//            System.out.println("update " + rateTO);
-//            repository.update(rateTO);
-//        } catch (RecordNotFoundException e) {
-//            System.out.println("insert " + rateTO);
-//            repository.insert(rateTO);
-//        }
-//    }
+    private void processRecord(String[] fields) {
+        ExchangeRateTO rateTO = getFieldsAsTO(fields);
+        try {
+            System.out.println("update " + rateTO);
+            repository.update(rateTO);
+        } catch (RecordNotFoundException e) {
+            System.out.println("insert " + rateTO);
+            repository.insert(rateTO);
+        }
+    }
 
     private ExchangeRateTO getFieldsAsTO(String[] fields) {
         ExchangeRateTO rateTO = new ExchangeRateTO();

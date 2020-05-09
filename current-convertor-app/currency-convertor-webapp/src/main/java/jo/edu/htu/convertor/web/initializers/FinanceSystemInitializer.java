@@ -2,16 +2,15 @@ package jo.edu.htu.convertor.web.initializers;
 
 import jo.edu.htu.convertor.web.servlets.ConvertAmountServlet;
 import jo.edu.htu.convertor.web.servlets.CurrenciesSelectionServlet;
+import jo.edu.htu.convertor.web.servlets.ImportBISServlet;
 import jo.edu.htu.convertor.web.servlets.ListRatesServlet;
 import jo.edu.htu.currency.convertor.*;
 import jo.edu.htu.currency.model.DBExchangeRateRepository;
 import jo.edu.htu.currency.model.ExchangeRateRepository;
 import org.apache.commons.dbcp2.BasicDataSource;
 
-import javax.servlet.ServletContainerInitializer;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRegistration;
+import javax.servlet.*;
+import javax.servlet.annotation.MultipartConfig;
 import java.util.Set;
 
 // Java SE (Service Loader) https://docs.oracle.com/javase/7/docs/api/java/util/ServiceLoader.html
@@ -34,10 +33,24 @@ public class FinanceSystemInitializer implements ServletContainerInitializer {
         ListRatesHandler listRatesHandler = new DefaultListRatesHandler(getRateHandler);
         ListAvailableCurrenciesHandler listAvailableCurrenciesHandler = new DefaultListAvailableCurrenciesHandler(repository);
         ConvertAmountHandler convertAmountHandler = new DefaultConvertAmountHandler(getRateHandler);
+        ImportRatesHandler importRatesHandler = new BISImportRatesHandler(repository);
 
         registerListRatesServlet(ctx, listRatesHandler);
         registerCurrenciesSelectionServlet(ctx, listAvailableCurrenciesHandler);
         registerConvertAmountServlet(ctx, listAvailableCurrenciesHandler, convertAmountHandler);
+        registerImportServlet(ctx, importRatesHandler);
+    }
+
+    private void registerImportServlet(ServletContext ctx, ImportRatesHandler importRatesHandler) {
+        ServletRegistration.Dynamic registration = ctx.addServlet("importRatesServlet", new ImportBISServlet(importRatesHandler));
+        registration.addMapping("/importBIS");
+        MultipartConfigElement multipartConfig = new MultipartConfigElement(
+                null,
+                1024 * 1024 * 2,
+                1024 * 1024 * 2,
+                1024 * 512);
+
+        registration.setMultipartConfig(multipartConfig);
     }
 
     private void registerConvertAmountServlet(ServletContext ctx,
