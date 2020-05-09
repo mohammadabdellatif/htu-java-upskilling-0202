@@ -59,6 +59,23 @@
     </table>
 </c:if>
 
+<c:if test="${not empty requestScope.lastFrom}">
+    Last convert request:
+    <table>
+        <tr>
+            <td>From:</td>
+            <td>${requestScope.lastFrom}</td>
+        </tr>
+        <tr>
+            <td>To:</td>
+            <td>${requestScope.lastTo}</td>
+        </tr>
+        <tr>
+            <td>Amount:</td>
+            <td>${requestScope.lastAmount}</td>
+        </tr>
+    </table>
+</c:if>
 
 </body>
 </html>
