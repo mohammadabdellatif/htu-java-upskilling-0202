@@ -30,17 +30,15 @@ public class ConvertAmountServlet extends HttpServlet {
         String to = req.getParameter("to");
         String amount = req.getParameter("amount");
 
-        ConvertRequest request = new ConvertRequest(from, to, new BigDecimal(amount));
-        ConvertResult convertResult = convertAmountHandler.convert(request);
+        ConvertRequest convertRequest = new ConvertRequest(from, to, new BigDecimal(amount));
+        ConvertResult convertResult = convertAmountHandler.convert(convertRequest);
 
         req.setAttribute("convertedAmount", convertResult.getAmount());
         req.setAttribute("rate", convertResult.getRate());
 
         HttpSession session = req.getSession(true);
         System.out.println("session id: " + session.getId());
-        session.setAttribute("lastFrom", from);
-        session.setAttribute("lastTo", to);
-        session.setAttribute("lastAmount", amount);
+        session.setAttribute("lastConvertRequest", convertRequest);
 
         forwardToView(req, resp);
     }

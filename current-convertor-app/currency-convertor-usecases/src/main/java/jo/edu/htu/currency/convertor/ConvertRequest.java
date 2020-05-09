@@ -1,8 +1,9 @@
 package jo.edu.htu.currency.convertor;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class ConvertRequest {
+public class ConvertRequest implements Serializable {
     private final String from;
     private final String to;
     private final BigDecimal amount;
