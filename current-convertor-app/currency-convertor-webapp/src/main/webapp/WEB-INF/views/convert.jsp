@@ -59,20 +59,20 @@
     </table>
 </c:if>
 
-<c:if test="${not empty requestScope.lastFrom}">
+<c:if test="${not empty sessionScope.lastFrom}">
     Last convert request:
     <table>
         <tr>
             <td>From:</td>
-            <td>${requestScope.lastFrom}</td>
+            <td>${sessionScope.lastFrom}</td>
         </tr>
         <tr>
             <td>To:</td>
-            <td>${requestScope.lastTo}</td>
+            <td>${sessionScope.lastTo}</td>
         </tr>
         <tr>
             <td>Amount:</td>
-            <td>${requestScope.lastAmount}</td>
+            <td>${sessionScope.lastAmount}</td>
         </tr>
     </table>
 </c:if>

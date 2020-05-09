@@ -4,10 +4,7 @@ import jo.edu.htu.currency.convertor.*;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 import java.io.IOException;
 import java.math.BigDecimal;
 
@@ -39,10 +36,21 @@ public class ConvertAmountServlet extends HttpServlet {
         req.setAttribute("convertedAmount", convertResult.getAmount());
         req.setAttribute("rate", convertResult.getRate());
 
-        Cookie cookie = new Cookie("lastConvertRequest", from + "-" + to + "-" + amount);
-        resp.addCookie(cookie);
+        HttpSession session = req.getSession(true);
+        System.out.println("session id: " + session.getId());
+        session.setAttribute("lastFrom", from);
+        session.setAttribute("lastTo", to);
+        session.setAttribute("lastAmount", amount);
 
         forwardToView(req, resp);
+    }
+
+    private void addHistoryCookie(HttpServletRequest req, HttpServletResponse resp, String from, String to, String amount) {
+        Cookie cookie = new Cookie("lastConvertRequest", from + "-" + to + "-" + amount);
+        cookie.setPath(req.getContextPath() + req.getServletPath());
+        cookie.setMaxAge(60 * 60);
+        cookie.setHttpOnly(true);
+        resp.addCookie(cookie);
     }
 
     private void forwardToView(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
