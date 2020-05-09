@@ -1,16 +1,16 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
 <html>
 <head>
     <title>Convert Amount</title>
+   <link type="text/css" rel="stylesheet" href="/finance/css/app.css">
 </head>
 <body>
 <form action="/finance/convert" method="post">
     <table>
         <tr>
-            <td>Currency From:</td>
+            <td class="form-label">Currency From</td>
             <td>
                 <select name="from">
                     <c:forEach items="${requestScope['currencies']}" var="currency">
@@ -18,7 +18,7 @@
                     </c:forEach>
                 </select>
             </td>
-            <td>Currency To:</td>
+            <td class="form-label">Currency To</td>
             <td>
                 <select name="to">
                     <c:forEach items="${requestScope['currencies']}" var="currency">
@@ -28,7 +28,7 @@
             </td>
         </tr>
         <tr>
-            <td>Amount:</td>
+            <td class="form-label">Amount</td>
             <td><input type="number" step="0.001" name="amount"/></td>
         </tr>
         <tr>
