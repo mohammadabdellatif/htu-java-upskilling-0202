@@ -10,15 +10,28 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class ImportBISServlet extends HttpServlet {
 
     private final ImportRatesHandler importRatesHandler;
+    private Path tempDirectory;
 
     public ImportBISServlet(ImportRatesHandler importRatesHandler) {
         this.importRatesHandler = importRatesHandler;
+    }
+
+    @Override
+    public void init() throws ServletException {
+        String userHome = System.getProperty("user.home");
+        tempDirectory = Paths.get(userHome).resolve("bis-temp");
+        try {
+            Files.createDirectories(tempDirectory);
+        } catch (IOException e) {
+            throw new ServletException(e);
+        }
     }
 
     @Override
@@ -38,10 +51,11 @@ public class ImportBISServlet extends HttpServlet {
         System.out.println("content-type: " + part.getContentType());
         System.out.println("size of the file: " + part.getSize());
 
-        Path bisFilePath = Paths.get("m:","htu","uploaded-file","rates.csv");
-        part.write(bisFilePath.toString());
+        Path fileToImport = Files.createTempFile(part.getSubmittedFileName(), ".temp");
+        System.out.println(fileToImport);
+        part.write(fileToImport.toString());
 
-        importRatesHandler.importRates(new ImportRequest(bisFilePath));
+        importRatesHandler.importRates(new ImportRequest(fileToImport));
 
         forwardToView(req, resp);
     }
