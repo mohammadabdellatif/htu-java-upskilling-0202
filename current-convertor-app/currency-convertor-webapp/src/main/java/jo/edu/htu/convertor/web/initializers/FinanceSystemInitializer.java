@@ -1,5 +1,7 @@
 package jo.edu.htu.convertor.web.initializers;
 
+import jo.edu.htu.convertor.web.filters.LastAccessCookieFilter;
+import jo.edu.htu.convertor.web.filters.TrackRequestTimeFilter;
 import jo.edu.htu.convertor.web.servlets.ConvertAmountServlet;
 import jo.edu.htu.convertor.web.servlets.CurrenciesSelectionServlet;
 import jo.edu.htu.convertor.web.servlets.ImportBISServlet;
@@ -11,6 +13,7 @@ import org.apache.commons.dbcp2.BasicDataSource;
 
 import javax.servlet.*;
 import javax.servlet.annotation.MultipartConfig;
+import java.util.EnumSet;
 import java.util.Set;
 
 // Java SE (Service Loader) https://docs.oracle.com/javase/7/docs/api/java/util/ServiceLoader.html
@@ -39,6 +42,21 @@ public class FinanceSystemInitializer implements ServletContainerInitializer {
         registerCurrenciesSelectionServlet(ctx, listAvailableCurrenciesHandler);
         registerConvertAmountServlet(ctx, listAvailableCurrenciesHandler, convertAmountHandler);
         registerImportServlet(ctx, importRatesHandler);
+
+        registerTraceRequestTimeFilter(ctx);
+        registerLastAccessCookieFilter(ctx);
+    }
+
+    private void registerTraceRequestTimeFilter(ServletContext ctx) {
+        TrackRequestTimeFilter trackRequestTimeFilter = new TrackRequestTimeFilter();
+        FilterRegistration.Dynamic registration = ctx.addFilter("trackRequestTimeFilter", trackRequestTimeFilter);
+        registration.addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST), false, "/*");
+    }
+
+    private void registerLastAccessCookieFilter(ServletContext ctx) {
+        LastAccessCookieFilter filter = new LastAccessCookieFilter();
+        FilterRegistration.Dynamic filterRegistration = ctx.addFilter("LastAccessCookieFilter", filter);
+        filterRegistration.addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST), false, "/importBIS");
     }
 
     private void registerImportServlet(ServletContext ctx, ImportRatesHandler importRatesHandler) {
