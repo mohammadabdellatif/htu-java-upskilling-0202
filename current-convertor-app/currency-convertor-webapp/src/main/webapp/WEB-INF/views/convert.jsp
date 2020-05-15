@@ -7,7 +7,7 @@
    <link type="text/css" rel="stylesheet" href="/finance/css/app.css">
 </head>
 <body>
-<form action="/finance/convert" method="post">
+<form action="${pageContext.request.contextPath}/convert" method="post">
     <table>
         <tr>
             <td class="form-label">Currency From</td>

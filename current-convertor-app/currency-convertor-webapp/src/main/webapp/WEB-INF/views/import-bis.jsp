@@ -11,7 +11,7 @@
     <title>Import BIS file</title>
 </head>
 <body>
-<form method="post" action="/finance/importBIS" enctype="multipart/form-data">
+<form method="post" action="${pageContext.request.contextPath}/importBIS" enctype="multipart/form-data">
     <table>
         <tr>
             <td>BIS file</td>

@@ -12,7 +12,7 @@
 </head>
 <body>
 Select currencies to display the exchange rates:
-<form action="/finance/rates">
+<form action="${pageContext.request.contextPath}/rates">
     <%
         Set<String> codes = (Set<String>) request.getAttribute("codes");
     %>
