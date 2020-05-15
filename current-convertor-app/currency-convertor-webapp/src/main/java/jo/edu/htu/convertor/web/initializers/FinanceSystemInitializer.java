@@ -1,11 +1,9 @@
 package jo.edu.htu.convertor.web.initializers;
 
+import jo.edu.htu.convertor.web.filters.AuthenticationFilter;
 import jo.edu.htu.convertor.web.filters.LastAccessCookieFilter;
 import jo.edu.htu.convertor.web.filters.TrackRequestTimeFilter;
-import jo.edu.htu.convertor.web.servlets.ConvertAmountServlet;
-import jo.edu.htu.convertor.web.servlets.CurrenciesSelectionServlet;
-import jo.edu.htu.convertor.web.servlets.ImportBISServlet;
-import jo.edu.htu.convertor.web.servlets.ListRatesServlet;
+import jo.edu.htu.convertor.web.servlets.*;
 import jo.edu.htu.currency.convertor.*;
 import jo.edu.htu.currency.model.DBExchangeRateRepository;
 import jo.edu.htu.currency.model.ExchangeRateRepository;
@@ -42,9 +40,28 @@ public class FinanceSystemInitializer implements ServletContainerInitializer {
         registerCurrenciesSelectionServlet(ctx, listAvailableCurrenciesHandler);
         registerConvertAmountServlet(ctx, listAvailableCurrenciesHandler, convertAmountHandler);
         registerImportServlet(ctx, importRatesHandler);
+        registerLoginServlet(ctx);
 
+        registerAuthenticationFilter(ctx);
         registerTraceRequestTimeFilter(ctx);
         registerLastAccessCookieFilter(ctx);
+    }
+
+    private void registerAuthenticationFilter(ServletContext ctx) {
+        FilterRegistration.Dynamic filterRegistration = ctx.addFilter("authenticationFilter", new AuthenticationFilter());
+        filterRegistration.addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST), false,
+                "/", "/importBIS", "/convert");
+    }
+
+    private void registerLoginServlet(ServletContext ctx) {
+        AuthenticationHandler authenticationHandler = (u, p) -> {
+            if (!("admin".equalsIgnoreCase(u) && "pass123".equals(p))) {
+                throw new AuthenticationException("Invalid credentials");
+            }
+        };
+        LoginServlet loginServlet = new LoginServlet(authenticationHandler);
+        ServletRegistration.Dynamic registration = ctx.addServlet("loginServlet", loginServlet);
+        registration.addMapping("/login");
     }
 
     private void registerTraceRequestTimeFilter(ServletContext ctx) {
